@@ -4,7 +4,6 @@ import org.eclipse.scout.rt.client.dto.FormData;
 import org.eclipse.scout.rt.client.ui.form.AbstractForm;
 import org.eclipse.scout.rt.client.ui.form.AbstractFormHandler;
 import org.eclipse.scout.rt.client.ui.form.IForm;
-import org.eclipse.scout.rt.client.ui.form.fields.booleanfield.AbstractBooleanField;
 import org.eclipse.scout.rt.client.ui.form.fields.button.AbstractCancelButton;
 import org.eclipse.scout.rt.client.ui.form.fields.button.AbstractOkButton;
 import org.eclipse.scout.rt.client.ui.form.fields.groupbox.AbstractGroupBox;
@@ -13,8 +12,6 @@ import org.eclipse.scout.rt.platform.BEANS;
 import org.eclipse.scout.rt.platform.Order;
 import org.eclipse.scout.rt.shared.TEXTS;
 
-import zodiac.sitebuilder.client.questionslist.QuestionForm.MainBox.Answer1Field;
-import zodiac.sitebuilder.client.questionslist.QuestionForm.MainBox.BoolField;
 import zodiac.sitebuilder.client.questionslist.QuestionForm.MainBox.CancelButton;
 import zodiac.sitebuilder.client.questionslist.QuestionForm.MainBox.OkButton;
 import zodiac.sitebuilder.client.questionslist.QuestionForm.MainBox.PromptField;
@@ -72,14 +69,6 @@ public class QuestionForm extends AbstractForm {
 		return getFieldByClass(PromptField.class);
 	}
 
-	public Answer1Field getAnswer1Field() {
-		return getFieldByClass(Answer1Field.class);
-	}
-
-	public BoolField getBoolField() {
-		return getFieldByClass(BoolField.class);
-	}
-
 	public OkButton getOkButton() {
 		return getFieldByClass(OkButton.class);
 	}
@@ -100,30 +89,7 @@ public class QuestionForm extends AbstractForm {
 			protected int getConfiguredMaxLength() {
 				return 128;
 			}
-		}
-
-		@Order(2000)
-		public class Answer1Field extends AbstractStringField {
-			@Override
-			protected String getConfiguredLabel() {
-				return TEXTS.get("Answer1");
-			}
-
-			@Override
-			protected int getConfiguredMaxLength() {
-				return 128;
-			}
-		}
-
-		@Order(3000)
-		public class BoolField extends AbstractBooleanField {
-			@Override
-			protected String getConfiguredLabel() {
-				return "BoolCol";
-			}
-		}
-		
-		
+		}		
 
 		@Order(100000)
 		public class OkButton extends AbstractOkButton {

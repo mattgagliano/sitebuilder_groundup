@@ -1,4 +1,4 @@
-package zodiac.sitebuilder.client.questionslist;
+package zodiac.sitebuilder.client.logpage;
 
 import java.util.Set;
 
@@ -8,81 +8,44 @@ import org.eclipse.scout.rt.client.ui.action.menu.IMenu;
 import org.eclipse.scout.rt.client.ui.action.menu.IMenuType;
 import org.eclipse.scout.rt.client.ui.action.menu.TableMenuType;
 import org.eclipse.scout.rt.client.ui.basic.table.AbstractTable;
-import org.eclipse.scout.rt.client.ui.basic.table.columns.AbstractBooleanColumn;
 import org.eclipse.scout.rt.client.ui.basic.table.columns.AbstractStringColumn;
+import org.eclipse.scout.rt.client.ui.basic.table.columns.IColumn;
 import org.eclipse.scout.rt.client.ui.desktop.outline.pages.AbstractPageWithTable;
 import org.eclipse.scout.rt.client.ui.form.FormEvent;
 import org.eclipse.scout.rt.client.ui.form.FormListener;
 import org.eclipse.scout.rt.platform.BEANS;
 import org.eclipse.scout.rt.platform.Order;
 import org.eclipse.scout.rt.platform.util.CollectionUtility;
+import org.eclipse.scout.rt.platform.util.collection.OrderedCollection;
 import org.eclipse.scout.rt.shared.TEXTS;
 import org.eclipse.scout.rt.shared.services.common.jdbc.SearchFilter;
 
-import zodiac.sitebuilder.client.questionslist.QuestionsListTablePage.Table;
-import zodiac.sitebuilder.shared.questionslist.IQuestionService;
-import zodiac.sitebuilder.shared.questionslist.QuestionsListTablePageData;
+import zodiac.sitebuilder.client.logform.LogForm;
+import zodiac.sitebuilder.client.logpage.LogTablePage.Table;
+import zodiac.sitebuilder.shared.logpage.ILogService;
+import zodiac.sitebuilder.shared.logpage.LogTablePageData;
 
-@Data(QuestionsListTablePageData.class)
-public class QuestionsListTablePage extends AbstractPageWithTable<Table> {
+@Data(LogTablePageData.class)
+public class LogTablePage extends AbstractPageWithTable<Table> {
 
 	@Override
 	protected String getConfiguredTitle() {
-		return TEXTS.get("QuestionsList");
+		return TEXTS.get("LogTablePage");
 	}
 
 	@Override
 	protected void execLoadData(SearchFilter filter) {
-		importPageData(BEANS.get(IQuestionService.class).getQuestionsListTableData(filter));
+		importPageData(BEANS.get(ILogService.class).getLogTableData(filter));
 	}
 
 	public class Table extends AbstractTable {
-
-	
-		public QuestionIdColumn getQuestionIdColumn() {
-			return getColumnSet().getColumnByClass(QuestionIdColumn.class);
-		}
-
-	
-		public F1Column getF1Column() {
-			return getColumnSet().getColumnByClass(F1Column.class);
-		}
-
-
-		public F2Column getF2Column() {
-			return getColumnSet().getColumnByClass(F2Column.class);
-		}
-
-
-		public F3Column getF3Column() {
-			return getColumnSet().getColumnByClass(F3Column.class);
-		}
-
-
-		public F4Column getF4Column() {
-			return getColumnSet().getColumnByClass(F4Column.class);
-		}
-
-
-		public F5Column getF5Column() {
-			return getColumnSet().getColumnByClass(F5Column.class);
-		}
-
-
-		public F6Column getF6Column() {
-			return getColumnSet().getColumnByClass(F6Column.class);
-		}
-
-
-		public PromptColumn getPromptColumn() {
-			return getColumnSet().getColumnByClass(PromptColumn.class);
-		}
-
-
-		@Order(0)
-		public class QuestionIdColumn extends AbstractStringColumn {
+		
+		
+		
+		@Order(1000)
+		public class LogIdColumn extends AbstractStringColumn {
 			@Override
-			protected boolean getConfiguredDisplayable() {
+			protected boolean getConfiguredVisible() {
 				return false;
 			}
 
@@ -92,26 +55,12 @@ public class QuestionsListTablePage extends AbstractPageWithTable<Table> {
 			}
 		}
 
-		
-		@Order(1000)
-		public class PromptColumn extends AbstractStringColumn {
-			@Override
-			protected String getConfiguredHeaderText() {
-				return TEXTS.get("Prompt");
-			}
-
-			@Override
-			protected int getConfiguredWidth() {
-				return 100;
-			}
-		}
-
 
 		@Order(2000)
-		public class F1Column extends AbstractBooleanColumn {
+		public class ProjectColumn extends AbstractStringColumn {
 			@Override
 			protected String getConfiguredHeaderText() {
-				return TEXTS.get("F1");
+				return TEXTS.get("Project");
 			}
 
 			@Override
@@ -122,10 +71,10 @@ public class QuestionsListTablePage extends AbstractPageWithTable<Table> {
 
 
 		@Order(3000)
-		public class F2Column extends AbstractBooleanColumn {
+		public class FormTypeColumn extends AbstractStringColumn {
 			@Override
 			protected String getConfiguredHeaderText() {
-				return TEXTS.get("F2");
+				return TEXTS.get("FormType");
 			}
 
 			@Override
@@ -136,10 +85,10 @@ public class QuestionsListTablePage extends AbstractPageWithTable<Table> {
 
 
 		@Order(4000)
-		public class F3Column extends AbstractBooleanColumn {
+		public class Q0Column extends AbstractStringColumn {
 			@Override
 			protected String getConfiguredHeaderText() {
-				return TEXTS.get("F3");
+				return TEXTS.get("Q0");
 			}
 
 			@Override
@@ -150,10 +99,10 @@ public class QuestionsListTablePage extends AbstractPageWithTable<Table> {
 
 
 		@Order(5000)
-		public class F4Column extends AbstractBooleanColumn {
+		public class Q1Column extends AbstractStringColumn {
 			@Override
 			protected String getConfiguredHeaderText() {
-				return TEXTS.get("F4");
+				return TEXTS.get("Q1");
 			}
 
 			@Override
@@ -164,10 +113,10 @@ public class QuestionsListTablePage extends AbstractPageWithTable<Table> {
 
 
 		@Order(6000)
-		public class F5Column extends AbstractBooleanColumn {
+		public class Q2Column extends AbstractStringColumn {
 			@Override
 			protected String getConfiguredHeaderText() {
-				return TEXTS.get("F5");
+				return TEXTS.get("Q2");
 			}
 
 			@Override
@@ -178,10 +127,10 @@ public class QuestionsListTablePage extends AbstractPageWithTable<Table> {
 
 
 		@Order(7000)
-		public class F6Column extends AbstractBooleanColumn {
+		public class Q3Column extends AbstractStringColumn {
 			@Override
 			protected String getConfiguredHeaderText() {
-				return TEXTS.get("F6");
+				return TEXTS.get("Q3");
 			}
 
 			@Override
@@ -190,6 +139,33 @@ public class QuestionsListTablePage extends AbstractPageWithTable<Table> {
 			}
 		}
 
+		
+		@Override
+		protected void injectColumnsInternal(OrderedCollection<IColumn<?>> columnList) {
+			//columnList.addLast(createCustomColumn("Q1"));
+			//columnList.addLast(createCustomColumn("Q2"));
+			//columnList.addLast(createCustomColumn("Q3"));
+		}
+		
+		protected IColumn<?> createCustomColumn(String columnName) {
+			return new AbstractStringColumn() {
+				
+				@Override
+				public String classId() {
+					return columnName;
+				}
+				
+				@Override
+				protected String getConfiguredHeaderText() {
+					return columnName;
+				}
+				
+				@Override
+				public String getColumnId() {
+					return columnName;
+				}
+			};
+		}
 		
 		@Override
 		protected Class<? extends IMenu> getConfiguredDefaultMenu() {
@@ -211,9 +187,9 @@ public class QuestionsListTablePage extends AbstractPageWithTable<Table> {
 
 			@Override
 			protected void execAction() {
-				QuestionForm form = new QuestionForm();
-				form.setQuestionId(getQuestionIdColumn().getSelectedValue());
-				form.addFormListener(new QuestionFormListener());
+				LogForm form = new LogForm();
+				form.setLogId(getLogIdColumn().getSelectedValue());
+				form.addFormListener(new LogFormListener());
 				
 				form.startModify();
 			}
@@ -234,14 +210,15 @@ public class QuestionsListTablePage extends AbstractPageWithTable<Table> {
 
 			@Override
 			protected void execAction() {
-				QuestionForm form = new QuestionForm();
-				form.addFormListener(new QuestionFormListener());
+				System.out.println(Table.this.getColumns().toString());
+				LogForm form = new LogForm();
+				form.addFormListener(new LogFormListener());
 				
 				form.startNew();
 			}
 		}
 		
-		private class QuestionFormListener implements FormListener {
+		private class LogFormListener implements FormListener {
 
 			@Override
 			public void formChanged(FormEvent e) {
@@ -251,6 +228,36 @@ public class QuestionsListTablePage extends AbstractPageWithTable<Table> {
 				}
 			}
 			
+		}
+
+		public FormTypeColumn getFormTypeColumn() {
+			return getColumnSet().getColumnByClass(FormTypeColumn.class);
+		}
+
+		public Q0Column getQ0Column() {
+			return getColumnSet().getColumnByClass(Q0Column.class);
+		}
+
+		
+
+		public Q1Column getQ1Column() {
+			return getColumnSet().getColumnByClass(Q1Column.class);
+		}
+
+		public Q2Column getQ2Column() {
+			return getColumnSet().getColumnByClass(Q2Column.class);
+		}
+
+		public Q3Column getQ3Column() {
+			return getColumnSet().getColumnByClass(Q3Column.class);
+		}
+
+		public ProjectColumn getProjectColumn() {
+			return getColumnSet().getColumnByClass(ProjectColumn.class);
+		}
+
+		public LogIdColumn getLogIdColumn() {
+			return getColumnSet().getColumnByClass(LogIdColumn.class);
 		}
 	}
 }

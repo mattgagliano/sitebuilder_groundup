@@ -8,6 +8,7 @@ import org.eclipse.scout.rt.client.ui.desktop.outline.IOutline;
 import org.eclipse.scout.rt.platform.Order;
 import org.eclipse.scout.rt.platform.util.CollectionUtility;
 
+import zodiac.sitebuilder.client.logpage.LogOutline;
 import zodiac.sitebuilder.client.questionslist.QuestionsListOutline;
 import zodiac.sitebuilder.shared.Icons;
 
@@ -29,7 +30,7 @@ public class Desktop extends AbstractDesktop {
 
 	@Override
 	protected List<Class<? extends IOutline>> getConfiguredOutlines() {
-		return CollectionUtility.<Class<? extends IOutline>>arrayList(QuestionsListOutline.class);
+		return CollectionUtility.<Class<? extends IOutline>>arrayList(QuestionsListOutline.class, LogOutline.class);
 	}
 
 	@Override
@@ -55,6 +56,23 @@ public class Desktop extends AbstractDesktop {
 		}
 
 		protected QuestionsListOutlineViewButton(Class<? extends QuestionsListOutline> outlineClass) {
+			super(Desktop.this, outlineClass);
+		}
+
+		@Override
+		protected DisplayStyle getConfiguredDisplayStyle() {
+			return DisplayStyle.TAB;
+		}
+	}
+	
+	@Order(2000)
+	public class LogOutlineViewButton extends AbstractOutlineViewButton {
+
+		public LogOutlineViewButton() {
+			this(LogOutline.class);
+		}
+
+		protected LogOutlineViewButton(Class<? extends LogOutline> outlineClass) {
 			super(Desktop.this, outlineClass);
 		}
 

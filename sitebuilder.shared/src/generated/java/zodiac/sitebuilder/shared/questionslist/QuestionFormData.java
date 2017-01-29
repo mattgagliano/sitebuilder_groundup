@@ -16,14 +16,6 @@ public class QuestionFormData extends AbstractFormData {
 
 	private static final long serialVersionUID = 1L;
 
-	public Answer1 getAnswer1() {
-		return getFieldByClass(Answer1.class);
-	}
-
-	public Bool getBool() {
-		return getFieldByClass(Bool.class);
-	}
-
 	public Prompt getPrompt() {
 		return getFieldByClass(Prompt.class);
 	}
@@ -44,16 +36,6 @@ public class QuestionFormData extends AbstractFormData {
 
 	public QuestionIdProperty getQuestionIdProperty() {
 		return getPropertyByClass(QuestionIdProperty.class);
-	}
-
-	public static class Answer1 extends AbstractValueFieldData<String> {
-
-		private static final long serialVersionUID = 1L;
-	}
-
-	public static class Bool extends AbstractValueFieldData<Boolean> {
-
-		private static final long serialVersionUID = 1L;
 	}
 
 	public static class Prompt extends AbstractValueFieldData<String> {
