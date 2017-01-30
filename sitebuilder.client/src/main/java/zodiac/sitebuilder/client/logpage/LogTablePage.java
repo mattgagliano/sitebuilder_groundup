@@ -147,6 +147,8 @@ public class LogTablePage extends AbstractPageWithTable<Table> {
 			//columnList.addLast(createCustomColumn("Q3"));
 		}
 		
+		//!!!!!!!!!!!!!!!!!!!!!! may be able to use NVPair to reference custom columns
+		
 		protected IColumn<?> createCustomColumn(String columnName) {
 			return new AbstractStringColumn() {
 				
