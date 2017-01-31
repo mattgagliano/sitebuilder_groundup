@@ -41,7 +41,8 @@ public class DatabaseSetupService implements IDataStoreService {
 
 	@Override
 	public void dropDataStore() {
-		//derbyDB.dropDataStore();
+		DerbySql.DropDataStore("QUESTIONS");
+		DerbySql.DropDataStore("FORMS");
 	}
 	
 	@Override
@@ -49,9 +50,9 @@ public class DatabaseSetupService implements IDataStoreService {
 		
 		String tn1 = "FORMS";
 		String[] colnam1 = new String[7];
-		colnam1[0]="form_id";
+		colnam1[0]="formid";
 		colnam1[1]="project";
-		colnam1[2]="formtype";
+		colnam1[2]="formname";
 		colnam1[3]="Q0";
 		colnam1[4]="Q1";
 		colnam1[5]="Q2";
@@ -129,7 +130,7 @@ public class DatabaseSetupService implements IDataStoreService {
 		
 		String tn = "QUESTIONS";
 		String[] colnam = new String[2];
-		colnam[0]="question_id";
+		colnam[0]="questionid";
 		colnam[1]="prompt";
 		String[] colty = new String[2];
 		colty[0] = "VARCHAR(64)";

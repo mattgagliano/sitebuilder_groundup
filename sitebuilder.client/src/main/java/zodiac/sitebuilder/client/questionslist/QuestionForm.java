@@ -22,21 +22,21 @@ import zodiac.sitebuilder.shared.questionslist.UpdateQuestionPermission;
 @FormData(value = QuestionFormData.class, sdkCommand = FormData.SdkCommand.CREATE)
 public class QuestionForm extends AbstractForm {
 
-	private String questionId;
+	private String questionid;
 	
 	@FormData
-	public String getQuestionId() {
-		return questionId;
+	public String getQuestionid() {
+		return questionid;
 	}
 	
 	@FormData
-	public void setQuestionId(String questionId) {
-		this.questionId = questionId;
+	public void setQuestionid(String questionid) {
+		this.questionid = questionid;
 	}
 	
 	@Override
 	public Object computeExclusiveKey() {
-		return questionId;
+		return questionid;
 	}
 	
 	@Override

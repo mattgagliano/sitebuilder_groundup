@@ -52,29 +52,17 @@ public class QuestionsListTablePageData extends AbstractTablePageData {
 	public static class QuestionsListTableRowData extends AbstractTableRowData {
 
 		private static final long serialVersionUID = 1L;
-		public static final String questionId = "questionId";
+		public static final String questionid = "questionid";
 		public static final String prompt = "prompt";
-		public static final String f1 = "f1";
-		public static final String f2 = "f2";
-		public static final String f3 = "f3";
-		public static final String f4 = "f4";
-		public static final String f5 = "f5";
-		public static final String f6 = "f6";
-		private String m_questionId;
+		private String m_questionid;
 		private String m_prompt;
-		private Boolean m_f1;
-		private Boolean m_f2;
-		private Boolean m_f3;
-		private Boolean m_f4;
-		private Boolean m_f5;
-		private Boolean m_f6;
 
-		public String getQuestionId() {
-			return m_questionId;
+		public String getQuestionid() {
+			return m_questionid;
 		}
 
-		public void setQuestionId(String newQuestionId) {
-			m_questionId = newQuestionId;
+		public void setQuestionid(String newQuestionid) {
+			m_questionid = newQuestionid;
 		}
 
 		public String getPrompt() {
@@ -83,54 +71,6 @@ public class QuestionsListTablePageData extends AbstractTablePageData {
 
 		public void setPrompt(String newPrompt) {
 			m_prompt = newPrompt;
-		}
-
-		public Boolean getF1() {
-			return m_f1;
-		}
-
-		public void setF1(Boolean newF1) {
-			m_f1 = newF1;
-		}
-
-		public Boolean getF2() {
-			return m_f2;
-		}
-
-		public void setF2(Boolean newF2) {
-			m_f2 = newF2;
-		}
-
-		public Boolean getF3() {
-			return m_f3;
-		}
-
-		public void setF3(Boolean newF3) {
-			m_f3 = newF3;
-		}
-
-		public Boolean getF4() {
-			return m_f4;
-		}
-
-		public void setF4(Boolean newF4) {
-			m_f4 = newF4;
-		}
-
-		public Boolean getF5() {
-			return m_f5;
-		}
-
-		public void setF5(Boolean newF5) {
-			m_f5 = newF5;
-		}
-
-		public Boolean getF6() {
-			return m_f6;
-		}
-
-		public void setF6(Boolean newF6) {
-			m_f6 = newF6;
 		}
 	}
 }

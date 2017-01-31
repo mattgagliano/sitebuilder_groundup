@@ -45,10 +45,12 @@ public class DerbySql {
 		if (CONFIG.getPropertyValue(DatabaseAutoPopulateProperty.class)) {
 			
 			StringBuilder str = new StringBuilder();
+			List<String> columnNames = getColumns(tableName);
+			
 			str.append("INSERT INTO "+tableName+" (");
 			
 			for (int k = 0; k < sampleValues[0].length; k++) {
-				str.append(getColumns(tableName).get(k));
+				str.append(columnNames.get(k));
 				if (k < (sampleValues[0].length-1)) {
 					str.append(", ");
 				}
@@ -102,5 +104,106 @@ public class DerbySql {
 		}
 		
 		return columnsList;
+	}
+	
+	public static String TablePageSelectInto(String tableName) {
+		StringBuilder str = new StringBuilder();
+		List<String> columnNames = getColumns(tableName);
+		
+		str.append("SELECT ");
+		
+		for (int i = 0; i < columnNames.size(); i++) {
+			str.append(columnNames.get(i));
+			if (i < (columnNames.size() - 1)) {
+				str.append(", ");
+			}
+		}
+		
+		str.append(" FROM " + tableName + " INTO ");
+		
+		for (int j = 0; j < columnNames.size(); j++) {
+			str.append(":{page." + ToProper(columnNames.get(j)) + "}");
+			if (j < (columnNames.size() - 1)) {
+				str.append(", ");
+			}
+		}
+		
+		return str.toString();
+	}
+	
+	public static String FormDataCreate(String tableName) {
+		StringBuilder str = new StringBuilder();
+		List<String> columnNames = getColumns(tableName);
+		
+		str.append("INSERT INTO " + tableName + " ");
+		str.append("(" + columnNames.get(0) + ") ");
+		str.append("VALUES (:" + ToProper(columnNames.get(0)) + ")");
+		
+		return str.toString();
+	}
+	
+	//only works if primary key is first column in table
+	public static String FormDataLoad(String tableName) {
+		StringBuilder str = new StringBuilder();
+		List<String> columnNames = getColumns(tableName);
+		
+		str.append("SELECT ");
+		
+		for (int i = 1 ; i < columnNames.size(); i++) {
+			
+			str.append(columnNames.get(i));
+			
+			if (i < (columnNames.size() - 1)) {
+				str.append(",");
+			}
+			
+			str.append(" ");
+		}
+		
+		str.append("FROM " + tableName + " WHERE ");
+		str.append(getColumns(tableName).get(0) + " = :");
+		str.append(ToProper(getColumns(tableName).get(0)) + " INTO ");
+		
+		for (int i = 1 ; i < columnNames.size(); i++) {
+			
+			str.append(":" + ToProper(columnNames.get(i)));
+			
+			if (i < (columnNames.size() - 1)) {
+				str.append(",");
+			}
+			
+			str.append(" ");
+		}
+		
+		return str.toString();
+	}
+	
+	public static String FormDataStore(String tableName) {
+		StringBuilder str = new StringBuilder();
+		List<String> columnNames = getColumns(tableName);
+		
+		str.append("UPDATE " + tableName + " SET ");
+		
+		for (int i = 0; i < columnNames.size(); i++) {
+			str.append(columnNames.get(i) + " = :" + ToProper(columnNames.get(i)) + " ");
+			
+			if (i < (columnNames.size() - 1)) {
+				str.append(",");
+			}
+			
+			str.append(" ");
+		}
+		
+		str.append("WHERE " + columnNames.get(0) + " = :" + ToProper(columnNames.get(0)));
+		
+		return str.toString();
+	}
+	
+	public static String DropDataStore(String tableName) {
+		return ("DROP TABLE " + tableName);
+	}
+	
+	public static String ToProper(String str) {
+		return (str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase());
 	}
 }

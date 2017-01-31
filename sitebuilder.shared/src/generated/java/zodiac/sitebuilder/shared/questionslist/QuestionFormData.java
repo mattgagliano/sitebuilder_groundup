@@ -21,21 +21,21 @@ public class QuestionFormData extends AbstractFormData {
 	}
 
 	/**
-	 * access method for property QuestionId.
+	 * access method for property Questionid.
 	 */
-	public String getQuestionId() {
-		return getQuestionIdProperty().getValue();
+	public String getQuestionid() {
+		return getQuestionidProperty().getValue();
 	}
 
 	/**
-	 * access method for property QuestionId.
+	 * access method for property Questionid.
 	 */
-	public void setQuestionId(String questionId) {
-		getQuestionIdProperty().setValue(questionId);
+	public void setQuestionid(String questionid) {
+		getQuestionidProperty().setValue(questionid);
 	}
 
-	public QuestionIdProperty getQuestionIdProperty() {
-		return getPropertyByClass(QuestionIdProperty.class);
+	public QuestionidProperty getQuestionidProperty() {
+		return getPropertyByClass(QuestionidProperty.class);
 	}
 
 	public static class Prompt extends AbstractValueFieldData<String> {
@@ -43,7 +43,7 @@ public class QuestionFormData extends AbstractFormData {
 		private static final long serialVersionUID = 1L;
 	}
 
-	public static class QuestionIdProperty extends AbstractPropertyData<String> {
+	public static class QuestionidProperty extends AbstractPropertyData<String> {
 
 		private static final long serialVersionUID = 1L;
 	}

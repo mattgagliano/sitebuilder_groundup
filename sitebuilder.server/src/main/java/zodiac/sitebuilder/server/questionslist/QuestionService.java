@@ -10,6 +10,7 @@ import org.eclipse.scout.rt.shared.TEXTS;
 import org.eclipse.scout.rt.shared.services.common.jdbc.SearchFilter;
 import org.eclipse.scout.rt.shared.services.common.security.ACCESS;
 
+import zodiac.sitebuilder.server.sql.DerbySql;
 import zodiac.sitebuilder.shared.questionslist.CreateQuestionPermission;
 import zodiac.sitebuilder.shared.questionslist.IQuestionService;
 import zodiac.sitebuilder.shared.questionslist.QuestionFormData;
@@ -23,12 +24,7 @@ public class QuestionService implements IQuestionService {
 	public QuestionsListTablePageData getQuestionsListTableData(SearchFilter filter) {
 		QuestionsListTablePageData pageData = new QuestionsListTablePageData();
 
-		String tablePageSelectInto = "SELECT question_id, prompt "
-				+ "	FROM QUESTIONS "
-				+ " INTO :{page.QuestionId}, :{page.prompt}";
-		
-		//sql page select + into page data	{:page.fieldName}
-		SQL.selectInto(tablePageSelectInto, new NVPair("page", pageData));
+		SQL.selectInto(DerbySql.TablePageSelectInto("QUESTIONS"), new NVPair("page", pageData));
 		
 		return pageData;
 	}
@@ -48,11 +44,11 @@ public class QuestionService implements IQuestionService {
 			throw new VetoException(TEXTS.get("AuthorizationFailed"));
 		}
 
-		if (StringUtility.isNullOrEmpty(formData.getQuestionId())) {
-			formData.setQuestionId(UUID.randomUUID().toString());
+		if (StringUtility.isNullOrEmpty(formData.getQuestionid())) {
+			formData.setQuestionid(UUID.randomUUID().toString());
 		}
 		
-		SQL.insert("INSERT INTO QUESTIONS (question_id) VALUES (:QuestionId)", formData);
+		SQL.insert(DerbySql.FormDataCreate("QUESTIONS"), formData);
 				
 		return store(formData);
 	}
@@ -63,11 +59,7 @@ public class QuestionService implements IQuestionService {
 			throw new VetoException(TEXTS.get("AuthorizationFailed"));
 		}
 		
-		String formDataSelectInto = "SELECT prompt FROM QUESTIONS "
-				+ "	WHERE   question_id = :QuestionId "
-				+ " INTO    :prompt";
-		
-		SQL.selectInto(formDataSelectInto, formData);
+		SQL.selectInto(DerbySql.FormDataLoad("QUESTIONS"), formData);
 		
 		return formData;
 	}
@@ -78,11 +70,7 @@ public class QuestionService implements IQuestionService {
 			throw new VetoException(TEXTS.get("AuthorizationFailed"));
 		}
 		
-		String formDataUpdate = "UPDATE QUESTIONS "
-				+ "SET		prompt = :prompt "
-				+ "WHERE 	question_id = :QuestionId";
-		
-		SQL.update(formDataUpdate, formData);
+		SQL.update(DerbySql.FormDataStore("QUESTIONS"), formData);		
 		
 		return formData;
 	}
