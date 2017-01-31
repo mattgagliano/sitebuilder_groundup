@@ -1,5 +1,7 @@
 package zodiac.sitebuilder.server.sql;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.scout.rt.platform.config.CONFIG;
@@ -46,7 +48,7 @@ public class DerbySql {
 			str.append("INSERT INTO "+tableName+" (");
 			
 			for (int k = 0; k < sampleValues[0].length; k++) {
-				str.append(getColumns(tableName).toArray()[k]);
+				str.append(getColumns(tableName).get(k));
 				if (k < (sampleValues[0].length-1)) {
 					str.append(", ");
 				}
@@ -84,13 +86,21 @@ public class DerbySql {
 		return CollectionUtility.hashSet(tables.getValue());
 	}
 	
-	public static Set<String> getColumns(String tableName) {
+	public static List<String> getColumns(String tableName) {
+		List<String> columnsList = new ArrayList<String>();		
 		StringArrayHolder columns = new StringArrayHolder();
+		
 		SQL.selectInto("SELECT COLUMNNAME FROM sys.syscolumns c "
 				+ "INNER JOIN sys.systables t "
 				+ "ON t.tableid = c.referenceid "
 				+ "WHERE t.tablename = '"+tableName.toUpperCase()+"' "
+				+ "ORDER BY COLUMNNUMBER "
 				+ "INTO :result", new NVPair("result", columns));
-		return CollectionUtility.hashSet(columns.getValue());
+		
+		for (int i = 0; i < columns.getValue().length; i++) {
+			columnsList.add(i, columns.getValue()[i]);
+		}
+		
+		return columnsList;
 	}
 }
