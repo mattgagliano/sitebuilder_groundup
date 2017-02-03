@@ -1,5 +1,7 @@
 package zodiac.sitebuilder.client.formslist;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.scout.rt.client.dto.Data;
@@ -8,14 +10,15 @@ import org.eclipse.scout.rt.client.ui.action.menu.IMenu;
 import org.eclipse.scout.rt.client.ui.action.menu.IMenuType;
 import org.eclipse.scout.rt.client.ui.action.menu.TableMenuType;
 import org.eclipse.scout.rt.client.ui.basic.table.AbstractTable;
-import org.eclipse.scout.rt.client.ui.basic.table.columns.AbstractBooleanColumn;
 import org.eclipse.scout.rt.client.ui.basic.table.columns.AbstractStringColumn;
+import org.eclipse.scout.rt.client.ui.basic.table.columns.IColumn;
 import org.eclipse.scout.rt.client.ui.desktop.outline.pages.AbstractPageWithTable;
 import org.eclipse.scout.rt.client.ui.form.FormEvent;
 import org.eclipse.scout.rt.client.ui.form.FormListener;
 import org.eclipse.scout.rt.platform.BEANS;
 import org.eclipse.scout.rt.platform.Order;
 import org.eclipse.scout.rt.platform.util.CollectionUtility;
+import org.eclipse.scout.rt.platform.util.collection.OrderedCollection;
 import org.eclipse.scout.rt.shared.TEXTS;
 import org.eclipse.scout.rt.shared.services.common.jdbc.SearchFilter;
 
@@ -26,36 +29,64 @@ import zodiac.sitebuilder.shared.formslist.IFormsListService;
 @Data(FormsListTablePageData.class)
 public class FormsListTablePage extends AbstractPageWithTable<Table> {
 
+	private List<IColumn<?>> m_injectedColumns;
+	
 	@Override
 	protected String getConfiguredTitle() {
 		return TEXTS.get("Forms");
 	}
-
+	
 	@Override
 	protected void execLoadData(SearchFilter filter) {
+		
+		updateCustomColumns();
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!execLoadData!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		
 		importPageData(BEANS.get(IFormsListService.class).getFormsListTableData(filter));
 	}
+	
+	private void updateCustomColumns() {
+		
+		m_injectedColumns = new ArrayList<IColumn<?>>();
+		Table table = getTable();
+		List<String> q = BEANS.get(IFormsListService.class).getDBQuestionLabels();
 
+		for (int i = 0; i < q.size(); i++) {
+			m_injectedColumns.add(createCustomColumn(q.get(i)));
+		}
+	
+		table.resetColumnConfiguration();
+	}
+			
+	private IColumn<?> createCustomColumn(String label) {
+		return new AbstractStringColumn() {
+			@Override
+			protected String getConfiguredHeaderText() {
+				return label;
+			}
+				
+			@Override
+			public String getColumnId() {
+				return label;
+			}
+			
+			@Override 
+			public String classId() {
+				return label;
+			}
+		};
+	}
+
+	@Override
+	protected void execPageActivated() {
+		SearchFilter sf = new SearchFilter();
+		execLoadData(sf);
+	}		
+	
 	public class Table extends AbstractTable {
 
 		public FormnameColumn getFormnameColumn() {
 			return getColumnSet().getColumnByClass(FormnameColumn.class);
-		}
-
-		public Q0Column getQ0Column() {
-			return getColumnSet().getColumnByClass(Q0Column.class);
-		}
-
-		public Q1Column getQ1Column() {
-			return getColumnSet().getColumnByClass(Q1Column.class);
-		}
-
-		public Q2Column getQ2Column() {
-			return getColumnSet().getColumnByClass(Q2Column.class);
-		}
-
-		public Q3Column getQ3Column() {
-			return getColumnSet().getColumnByClass(Q3Column.class);
 		}
 
 		public ProjectColumn getProjectColumn() {
@@ -75,6 +106,11 @@ public class FormsListTablePage extends AbstractPageWithTable<Table> {
 
 			@Override
 			protected boolean getConfiguredVisible() {
+				return false;
+			}
+			
+			@Override
+			protected boolean getConfiguredDisplayable() {
 				return false;
 			}
 		}
@@ -105,56 +141,11 @@ public class FormsListTablePage extends AbstractPageWithTable<Table> {
 			}
 		}
 
-		@Order(4000)
-		public class Q0Column extends AbstractBooleanColumn {
-			@Override
-			protected String getConfiguredHeaderText() {
-				return TEXTS.get("Q0");
-			}
-
-			@Override
-			protected int getConfiguredWidth() {
-				return 100;
-			}
-		}
-
-		@Order(5000)
-		public class Q1Column extends AbstractBooleanColumn {
-			@Override
-			protected String getConfiguredHeaderText() {
-				return TEXTS.get("Q1");
-			}
-
-			@Override
-			protected int getConfiguredWidth() {
-				return 100;
-			}
-		}
-
-		@Order(6000)
-		public class Q2Column extends AbstractBooleanColumn {
-			@Override
-			protected String getConfiguredHeaderText() {
-				return TEXTS.get("Q2");
-			}
-
-			@Override
-			protected int getConfiguredWidth() {
-				return 100;
-			}
-		}
-
-		@Order(7000)
-		public class Q3Column extends AbstractBooleanColumn {
-			@Override
-			protected String getConfiguredHeaderText() {
-				return TEXTS.get("Q3");
-			}
-
-			@Override
-			protected int getConfiguredWidth() {
-				return 100;
-			}
+		@Override
+		public void injectColumnsInternal(OrderedCollection<IColumn<?>> columnList) {
+			if (m_injectedColumns != null) {
+		        columnList.addAllLast(m_injectedColumns);
+		    }	
 		}
 		
 		@Override

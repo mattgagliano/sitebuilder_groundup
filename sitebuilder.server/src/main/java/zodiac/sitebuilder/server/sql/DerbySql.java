@@ -79,6 +79,9 @@ public class DerbySql {
 		}		
 	}
 	
+	public static void updateFormsDBQuestions() {
+		
+	}
 	
 	public static Set<String> getExistingTables() {
 		StringArrayHolder tables = new StringArrayHolder();
@@ -128,6 +131,28 @@ public class DerbySql {
 			}
 		}
 		
+		return str.toString();
+	}
+	
+	public static String TablePageSelect(String tableName) {
+		StringBuilder str = new StringBuilder();
+		List<String> columnNames = getColumns(tableName);
+		
+		str.append("SELECT ");
+		
+		for (int i = 0 ; i < columnNames.size(); i++) {
+			
+			str.append(columnNames.get(i));
+			
+			if (i < (columnNames.size() - 1)) {
+				str.append(",");
+			}
+			
+			str.append(" ");
+		}
+		
+		str.append("FROM " + tableName);
+				
 		return str.toString();
 	}
 	

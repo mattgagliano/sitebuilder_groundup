@@ -1,6 +1,7 @@
 package zodiac.sitebuilder.client.questionslist;
 
 import org.eclipse.scout.rt.client.dto.FormData;
+import org.eclipse.scout.rt.client.dto.FormData.DefaultSubtypeSdkCommand;
 import org.eclipse.scout.rt.client.ui.form.AbstractForm;
 import org.eclipse.scout.rt.client.ui.form.AbstractFormHandler;
 import org.eclipse.scout.rt.client.ui.form.IForm;
@@ -19,7 +20,7 @@ import zodiac.sitebuilder.shared.questionslist.IQuestionService;
 import zodiac.sitebuilder.shared.questionslist.QuestionFormData;
 import zodiac.sitebuilder.shared.questionslist.UpdateQuestionPermission;
 
-@FormData(value = QuestionFormData.class, sdkCommand = FormData.SdkCommand.CREATE)
+@FormData(value = QuestionFormData.class, sdkCommand = FormData.SdkCommand.CREATE, defaultSubtypeSdkCommand = DefaultSubtypeSdkCommand.CREATE)
 public class QuestionForm extends AbstractForm {
 
 	private String questionid;
@@ -33,6 +34,7 @@ public class QuestionForm extends AbstractForm {
 	public void setQuestionid(String questionid) {
 		this.questionid = questionid;
 	}
+	
 	
 	@Override
 	public Object computeExclusiveKey() {
@@ -76,8 +78,6 @@ public class QuestionForm extends AbstractForm {
 	@Order(1000)
 	public class MainBox extends AbstractGroupBox {
 
-		
-		
 		@Order(1000)
 		public class PromptField extends AbstractStringField {
 			@Override
@@ -89,7 +89,7 @@ public class QuestionForm extends AbstractForm {
 			protected int getConfiguredMaxLength() {
 				return 128;
 			}
-		}		
+		}
 
 		@Order(100000)
 		public class OkButton extends AbstractOkButton {

@@ -24,29 +24,27 @@ import zodiac.sitebuilder.shared.questionslist.QuestionsListTablePageData;
 
 @Data(QuestionsListTablePageData.class)
 public class QuestionsListTablePage extends AbstractPageWithTable<Table> {
-
+	
 	@Override
 	protected String getConfiguredTitle() {
 		return TEXTS.get("QuestionsList");
 	}
 
 	@Override
-	protected void execLoadData(SearchFilter filter) {
-		importPageData(BEANS.get(IQuestionService.class).getQuestionsListTableData(filter));
+	protected void execLoadData(SearchFilter filter) {			
+		importPageData(BEANS.get(IQuestionService.class).getQuestionsListTableData());
 	}
-
-	public class Table extends AbstractTable {
-
 	
-		public QuestionidColumn getQuestionidColumn() {
-			return getColumnSet().getColumnByClass(QuestionidColumn.class);
-		}
-
+	
+	public class Table extends AbstractTable {
 	
 		public PromptColumn getPromptColumn() {
 			return getColumnSet().getColumnByClass(PromptColumn.class);
 		}
 
+		public QuestionidColumn getQuestionidColumn() {
+			return getColumnSet().getColumnByClass(QuestionidColumn.class);
+		}
 
 		@Order(0)
 		public class QuestionidColumn extends AbstractStringColumn {
@@ -61,7 +59,7 @@ public class QuestionsListTablePage extends AbstractPageWithTable<Table> {
 			}
 		}
 
-		
+
 		@Order(1000)
 		public class PromptColumn extends AbstractStringColumn {
 			@Override
@@ -73,8 +71,8 @@ public class QuestionsListTablePage extends AbstractPageWithTable<Table> {
 			protected int getConfiguredWidth() {
 				return 100;
 			}
-		}
-	
+		}		
+		
 		@Override
 		protected Class<? extends IMenu> getConfiguredDefaultMenu() {
 			return EditMenu.class;

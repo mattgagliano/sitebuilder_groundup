@@ -7,7 +7,6 @@ import org.eclipse.scout.rt.platform.holders.NVPair;
 import org.eclipse.scout.rt.platform.util.StringUtility;
 import org.eclipse.scout.rt.server.jdbc.SQL;
 import org.eclipse.scout.rt.shared.TEXTS;
-import org.eclipse.scout.rt.shared.services.common.jdbc.SearchFilter;
 import org.eclipse.scout.rt.shared.services.common.security.ACCESS;
 
 import zodiac.sitebuilder.server.sql.DerbySql;
@@ -21,10 +20,12 @@ import zodiac.sitebuilder.shared.questionslist.UpdateQuestionPermission;
 public class QuestionService implements IQuestionService {
 
 	@Override
-	public QuestionsListTablePageData getQuestionsListTableData(SearchFilter filter) {
+	public QuestionsListTablePageData getQuestionsListTableData() {
 		QuestionsListTablePageData pageData = new QuestionsListTablePageData();
-
+		
 		SQL.selectInto(DerbySql.TablePageSelectInto("QUESTIONS"), new NVPair("page", pageData));
+		
+		DerbySql.updateFormsDBQuestions();
 		
 		return pageData;
 	}

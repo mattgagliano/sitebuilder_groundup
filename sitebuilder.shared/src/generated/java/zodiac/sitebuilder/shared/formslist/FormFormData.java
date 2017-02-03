@@ -42,22 +42,6 @@ public class FormFormData extends AbstractFormData {
 		return getFieldByClass(Project.class);
 	}
 
-	public Q0 getQ0() {
-		return getFieldByClass(Q0.class);
-	}
-
-	public Q1 getQ1() {
-		return getFieldByClass(Q1.class);
-	}
-
-	public Q2 getQ2() {
-		return getFieldByClass(Q2.class);
-	}
-
-	public Q3 getQ3() {
-		return getFieldByClass(Q3.class);
-	}
-
 	public static class FormidProperty extends AbstractPropertyData<String> {
 
 		private static final long serialVersionUID = 1L;
@@ -69,26 +53,6 @@ public class FormFormData extends AbstractFormData {
 	}
 
 	public static class Project extends AbstractValueFieldData<String> {
-
-		private static final long serialVersionUID = 1L;
-	}
-
-	public static class Q0 extends AbstractValueFieldData<Boolean> {
-
-		private static final long serialVersionUID = 1L;
-	}
-
-	public static class Q1 extends AbstractValueFieldData<Boolean> {
-
-		private static final long serialVersionUID = 1L;
-	}
-
-	public static class Q2 extends AbstractValueFieldData<Boolean> {
-
-		private static final long serialVersionUID = 1L;
-	}
-
-	public static class Q3 extends AbstractValueFieldData<Boolean> {
 
 		private static final long serialVersionUID = 1L;
 	}

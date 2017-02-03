@@ -55,17 +55,9 @@ public class FormsListTablePageData extends AbstractTablePageData {
 		public static final String formid = "formid";
 		public static final String project = "project";
 		public static final String formname = "formname";
-		public static final String q0 = "q0";
-		public static final String q1 = "q1";
-		public static final String q2 = "q2";
-		public static final String q3 = "q3";
 		private String m_formid;
 		private String m_project;
 		private String m_formname;
-		private Boolean m_q0;
-		private Boolean m_q1;
-		private Boolean m_q2;
-		private Boolean m_q3;
 
 		public String getFormid() {
 			return m_formid;
@@ -89,38 +81,6 @@ public class FormsListTablePageData extends AbstractTablePageData {
 
 		public void setFormname(String newFormname) {
 			m_formname = newFormname;
-		}
-
-		public Boolean getQ0() {
-			return m_q0;
-		}
-
-		public void setQ0(Boolean newQ0) {
-			m_q0 = newQ0;
-		}
-
-		public Boolean getQ1() {
-			return m_q1;
-		}
-
-		public void setQ1(Boolean newQ1) {
-			m_q1 = newQ1;
-		}
-
-		public Boolean getQ2() {
-			return m_q2;
-		}
-
-		public void setQ2(Boolean newQ2) {
-			m_q2 = newQ2;
-		}
-
-		public Boolean getQ3() {
-			return m_q3;
-		}
-
-		public void setQ3(Boolean newQ3) {
-			m_q3 = newQ3;
 		}
 	}
 }
