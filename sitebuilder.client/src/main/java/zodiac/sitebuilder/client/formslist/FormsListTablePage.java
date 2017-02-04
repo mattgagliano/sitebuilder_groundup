@@ -10,6 +10,7 @@ import org.eclipse.scout.rt.client.ui.action.menu.IMenu;
 import org.eclipse.scout.rt.client.ui.action.menu.IMenuType;
 import org.eclipse.scout.rt.client.ui.action.menu.TableMenuType;
 import org.eclipse.scout.rt.client.ui.basic.table.AbstractTable;
+import org.eclipse.scout.rt.client.ui.basic.table.columns.AbstractBooleanColumn;
 import org.eclipse.scout.rt.client.ui.basic.table.columns.AbstractStringColumn;
 import org.eclipse.scout.rt.client.ui.basic.table.columns.IColumn;
 import org.eclipse.scout.rt.client.ui.desktop.outline.pages.AbstractPageWithTable;
@@ -29,7 +30,7 @@ import zodiac.sitebuilder.shared.formslist.IFormsListService;
 @Data(FormsListTablePageData.class)
 public class FormsListTablePage extends AbstractPageWithTable<Table> {
 
-	private List<IColumn<?>> m_injectedColumns;
+	private List<AbstractBooleanColumn> m_injectedColumns;
 	
 	@Override
 	protected String getConfiguredTitle() {
@@ -40,14 +41,13 @@ public class FormsListTablePage extends AbstractPageWithTable<Table> {
 	protected void execLoadData(SearchFilter filter) {
 		
 		updateCustomColumns();
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!execLoadData!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		
 		importPageData(BEANS.get(IFormsListService.class).getFormsListTableData(filter));
 	}
 	
 	private void updateCustomColumns() {
 		
-		m_injectedColumns = new ArrayList<IColumn<?>>();
+		m_injectedColumns = new ArrayList<AbstractBooleanColumn>();
 		Table table = getTable();
 		List<String> q = BEANS.get(IFormsListService.class).getDBQuestionLabels();
 
@@ -58,8 +58,8 @@ public class FormsListTablePage extends AbstractPageWithTable<Table> {
 		table.resetColumnConfiguration();
 	}
 			
-	private IColumn<?> createCustomColumn(String label) {
-		return new AbstractStringColumn() {
+	private AbstractBooleanColumn createCustomColumn(String label) {
+		return new AbstractBooleanColumn() {
 			@Override
 			protected String getConfiguredHeaderText() {
 				return label;

@@ -25,17 +25,15 @@ public class QuestionService implements IQuestionService {
 		
 		SQL.selectInto(DerbySql.TablePageSelectInto("QUESTIONS"), new NVPair("page", pageData));
 		
-		DerbySql.updateFormsDBQuestions();
-		
 		return pageData;
 	}
 	
 	@Override
-	public QuestionFormData prepareCreate(QuestionFormData formData) {
+	public QuestionFormData prepareCreate(QuestionFormData formData) {		
 		if (!ACCESS.check(new CreateQuestionPermission())) {
 			throw new VetoException(TEXTS.get("AuthorizationFailed"));
 		}
-		// TODO [Matt.Gagliano] add business logic here.
+		
 		return formData;
 	}
 
@@ -71,7 +69,9 @@ public class QuestionService implements IQuestionService {
 			throw new VetoException(TEXTS.get("AuthorizationFailed"));
 		}
 		
-		SQL.update(DerbySql.FormDataStore("QUESTIONS"), formData);		
+		SQL.update(DerbySql.FormDataStore("QUESTIONS"), formData);	
+		
+		DerbySql.updateFormsTableColumns();
 		
 		return formData;
 	}

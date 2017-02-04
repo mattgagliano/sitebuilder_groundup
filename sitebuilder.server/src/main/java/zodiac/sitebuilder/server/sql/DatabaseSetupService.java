@@ -61,10 +61,10 @@ public class DatabaseSetupService implements IDataStoreService {
 		colty1[0] = "VARCHAR(64)";
 		colty1[1] = "VARCHAR(64)";
 		colty1[2] = "VARCHAR(64)";
-		colty1[3] = "VARCHAR(64)";
-		colty1[4] = "VARCHAR(64)";
-		colty1[5] = "VARCHAR(64)";
-		colty1[6] = "VARCHAR(64)";
+		colty1[3] = "BOOLEAN";
+		colty1[4] = "BOOLEAN";
+		colty1[5] = "BOOLEAN";
+		colty1[6] = "BOOLEAN";
 		String[] colatt1 = new String[7];
 		colatt1[0] = "NOT NULL CONSTRAINT FORMS_PK PRIMARY KEY";
 		colatt1[1] = "";

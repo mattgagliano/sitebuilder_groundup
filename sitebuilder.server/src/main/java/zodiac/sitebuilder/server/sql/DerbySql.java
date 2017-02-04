@@ -12,6 +12,8 @@ import org.eclipse.scout.rt.server.jdbc.SQL;
 
 import zodiac.sitebuilder.server.sql.DatabaseProperties.DatabaseAutoCreateProperty;
 import zodiac.sitebuilder.server.sql.DatabaseProperties.DatabaseAutoPopulateProperty;
+import zodiac.sitebuilder.shared.formslist.FormFormData;
+import zodiac.sitebuilder.shared.formslist.FormFormData.FormFormTable.FormFormTableRowData;
 
 public class DerbySql {
 
@@ -79,10 +81,6 @@ public class DerbySql {
 		}		
 	}
 	
-	public static void updateFormsDBQuestions() {
-		
-	}
-	
 	public static Set<String> getExistingTables() {
 		StringArrayHolder tables = new StringArrayHolder();
 		SQL.selectInto("SELECT UPPER(tablename) "
@@ -134,7 +132,7 @@ public class DerbySql {
 		return str.toString();
 	}
 	
-	public static String TablePageSelect(String tableName) {
+	public static String SelectAllColumnsFrom(String tableName) {
 		StringBuilder str = new StringBuilder();
 		List<String> columnNames = getColumns(tableName);
 		
@@ -163,6 +161,30 @@ public class DerbySql {
 		str.append("INSERT INTO " + tableName + " ");
 		str.append("(" + columnNames.get(0) + ") ");
 		str.append("VALUES (:" + ToProper(columnNames.get(0)) + ")");
+		
+		return str.toString();
+	}
+	
+	public static String SelectFromWhereIdEqual(String tableName) {
+		StringBuilder str = new StringBuilder();
+		List<String> columnNames = getColumns(tableName);
+		
+		str.append("SELECT ");
+		
+		for (int i = 1 ; i < columnNames.size(); i++) {
+			
+			str.append(columnNames.get(i));
+			
+			if (i < (columnNames.size() - 1)) {
+				str.append(",");
+			}
+			
+			str.append(" ");
+		}
+		
+		str.append("FROM " + tableName + " WHERE ");
+		str.append(getColumns(tableName).get(0) + " = :");
+		str.append(ToProper(getColumns(tableName).get(0)));
 		
 		return str.toString();
 	}
@@ -203,13 +225,38 @@ public class DerbySql {
 		return str.toString();
 	}
 	
+	public static void FormFormDataStore(FormFormData formData) {
+		StringBuilder str = new StringBuilder();
+		List<String> columnNames = getColumns("FORMS");
+		FormFormTableRowData[] rowData = formData.getFormFormTable().getRows();
+		
+		str.append("UPDATE FORMS SET ");
+		
+		str.append(columnNames.get(1) + " = '" + formData.getProject().getValue() +"', ");
+		str.append(columnNames.get(2) + " = '" + formData.getFormname().getValue() + "', ");
+		
+		for (int i = 3; i < columnNames.size(); i++) {
+			str.append(columnNames.get(i) + " = '" + rowData[i-3].getEnabled() + "'");
+			
+			if (i < (columnNames.size() - 1)) {
+				str.append(",");
+			}
+			
+			str.append(" ");
+		}
+		
+		str.append("WHERE " + columnNames.get(0) + " = :" + ToProper(columnNames.get(0)));
+		
+		SQL.update(str.toString(), formData);
+	}
+	
 	public static String FormDataStore(String tableName) {
 		StringBuilder str = new StringBuilder();
 		List<String> columnNames = getColumns(tableName);
 		
 		str.append("UPDATE " + tableName + " SET ");
 		
-		for (int i = 0; i < columnNames.size(); i++) {
+		for (int i = 1; i < columnNames.size(); i++) {
 			str.append(columnNames.get(i) + " = :" + ToProper(columnNames.get(i)) + " ");
 			
 			if (i < (columnNames.size() - 1)) {
@@ -222,6 +269,30 @@ public class DerbySql {
 		str.append("WHERE " + columnNames.get(0) + " = :" + ToProper(columnNames.get(0)));
 		
 		return str.toString();
+	}
+	
+	public static void updateFormsTableColumns() {
+		//select all prompts from questions table
+		//for now just add items to end & update
+		//later add capability to edit & move columns
+		
+		Object[][] rawQuestionData = SQL.select("SELECT PROMPT FROM QUESTIONS");
+		List<String> formsTableColumns = getColumns("FORMS");
+		
+		int columnDifferential = (rawQuestionData.length - (formsTableColumns.size() - 3));     //skip first 3 columns bc they're not dynamic
+		
+		if (columnDifferential == 0) {
+			System.out.println("No Columns to add");
+		}
+		else if  (columnDifferential < 0) {
+			System.out.println("Negative column differential - system error - forms table has extra columns");
+		}
+		else if (columnDifferential == 1) {
+			SQL.insert("ALTER TABLE FORMS ADD " + rawQuestionData[rawQuestionData.length-1][0].toString() + " VARCHAR(64)");			
+		}
+		else {
+			System.out.println("Number of columns to generate >1 - system error - can't add two questions at once");
+		}
 	}
 	
 	public static String DropDataStore(String tableName) {

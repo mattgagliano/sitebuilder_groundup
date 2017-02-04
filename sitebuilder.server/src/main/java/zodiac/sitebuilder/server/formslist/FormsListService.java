@@ -18,7 +18,7 @@ public class FormsListService implements IFormsListService {
 		FormsListTablePageData pageData = new FormsListTablePageData();
 		List<String> l = DerbySql.getColumns("FORMS");
 		
-		Object[][] rawPageData = SQL.select(DerbySql.TablePageSelect("FORMS"));
+		Object[][] rawPageData = SQL.select(DerbySql.SelectAllColumnsFrom("FORMS"));
 		
 		for (int i = 0; i < rawPageData.length; i++) {
 			FormsListTableRowData r = pageData.addRow();
@@ -27,7 +27,7 @@ public class FormsListService implements IFormsListService {
 			r.setFormname((String) rawPageData[i][2]);
 			
 			for (int j = 3; j < rawPageData[i].length; j++) {
-				r.setCustomValue(DerbySql.ToProper(l.get(j)), (String) rawPageData[i][j]);
+				r.setCustomValue(DerbySql.ToProper(l.get(j)), (Boolean) rawPageData[i][j]);
 			}
 		}
 				
@@ -37,7 +37,7 @@ public class FormsListService implements IFormsListService {
 	@Override
 	public List<String> getDBQuestionLabels() {
 		List<String> q = new ArrayList<String>();
-		Object[][] rawPageData = SQL.select(DerbySql.TablePageSelect("QUESTIONS"));
+		Object[][] rawPageData = SQL.select(DerbySql.SelectAllColumnsFrom("QUESTIONS"));
 		
 		for (int i = 0; i < rawPageData.length; i++) {
 			q.add((String) rawPageData[i][1]);
