@@ -35,8 +35,15 @@ public class QuestionsListTablePage extends AbstractPageWithTable<Table> {
 		importPageData(BEANS.get(IQuestionService.class).getQuestionsListTableData());
 	}
 	
+	@Override
+	protected void execPageActivated() {
+		SearchFilter sf = new SearchFilter();
+		execLoadData(sf);
+	}	
 	
 	public class Table extends AbstractTable {
+		
+		
 	
 		public PromptColumn getPromptColumn() {
 			return getColumnSet().getColumnByClass(PromptColumn.class);
@@ -78,7 +85,7 @@ public class QuestionsListTablePage extends AbstractPageWithTable<Table> {
 			return EditMenu.class;
 		}
 
-		@Order(1000)
+		@Order(2000)
 		public class EditMenu extends AbstractMenu {
 			@Override
 			protected String getConfiguredText() {
@@ -101,7 +108,7 @@ public class QuestionsListTablePage extends AbstractPageWithTable<Table> {
 		}
 
 
-		@Order(2000)
+		@Order(1000)
 		public class NewMenu extends AbstractMenu {
 			@Override
 			protected String getConfiguredText() {
@@ -119,6 +126,27 @@ public class QuestionsListTablePage extends AbstractPageWithTable<Table> {
 				form.addFormListener(new QuestionFormListener());
 				
 				form.startNew();
+			}
+		}
+
+
+		@Order(3000)
+		public class DeleteMenu extends AbstractMenu {
+			@Override
+			protected String getConfiguredText() {
+				return TEXTS.get("Delete");
+			}
+
+			@Override
+			protected Set<? extends IMenuType> getConfiguredMenuTypes() {
+				return CollectionUtility.hashSet(TableMenuType.SingleSelection, TableMenuType.MultiSelection);
+			}
+
+			@Override
+			protected void execAction() {
+				BEANS.get(IQuestionService.class).deleteRow(getTable().getSelectedRow().getCell(getQuestionidColumn())
+																									.getValue().toString());
+				getTable().deleteRow(getTable().getSelectedRow());	
 			}
 		}
 		

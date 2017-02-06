@@ -28,6 +28,11 @@ public class QuestionService implements IQuestionService {
 		return pageData;
 	}
 	
+	public void deleteRow(String row_id) {
+		
+		DerbySql.deleteRow(row_id, "QUESTIONS");
+	}
+	
 	@Override
 	public QuestionFormData prepareCreate(QuestionFormData formData) {		
 		if (!ACCESS.check(new CreateQuestionPermission())) {

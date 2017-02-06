@@ -271,6 +271,12 @@ public class DerbySql {
 		return str.toString();
 	}
 	
+	
+	//only works for table with primary key id column 0
+	public static void deleteRow(String row_id, String tableName) {
+		SQL.insert("DELETE FROM " + tableName + " WHERE " + getColumns(tableName).get(0) + " = '" + row_id +"'");
+	}
+	
 	public static void updateFormsTableColumns() {
 		//select all prompts from questions table
 		//for now just add items to end & update

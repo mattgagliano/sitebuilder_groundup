@@ -15,4 +15,6 @@ public interface IQuestionService extends IService {
 	QuestionFormData load(QuestionFormData formData);
 
 	QuestionFormData store(QuestionFormData formData);
+
+	void deleteRow(String row_id);
 }

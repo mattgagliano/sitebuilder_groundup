@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Fri Feb 03 16:37:31 PST 2017:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.1 - (1616546): instance a816c00e-015a-068d-f671-000002965710 
-on database directory memory:C:\Users\matt.gagliano\Desktop\SiteBuilder\git\sitebuilder_groundup\sitebuilder.server.app.dev\sitebuilder-database with class loader sun.misc.Launcher$AppClassLoader@7d4991ad 
-Loaded from file:/C:/Users/matt.gagliano/.m2/repository/org/apache/derby/derby/10.11.1.1/derby-10.11.1.1.jar
+Sat Feb 04 17:25:48 PST 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.1 - (1616546): instance a816c00e-015a-0be0-87d1-00000576f498 
+on database directory memory:C:\Users\gagli\Code\sitebuilder\git_workspace\sitebuilder_groundup\sitebuilder.server.app.dev\sitebuilder-database with class loader sun.misc.Launcher$AppClassLoader@28d93b30 
+Loaded from file:/C:/Users/gagli/.m2/repository/org/apache/derby/derby/10.11.1.1/derby-10.11.1.1.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_112-b15
-user.dir=C:\Users\matt.gagliano\Desktop\SiteBuilder\git\sitebuilder_groundup\sitebuilder.server.app.dev
-os.name=Windows 7
+java.runtime.version=1.8.0_121-b13
+user.dir=C:\Users\gagli\Code\sitebuilder\git_workspace\sitebuilder_groundup\sitebuilder.server.app.dev
+os.name=Windows 10
 os.arch=amd64
-os.version=6.1
+os.version=10.0
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
